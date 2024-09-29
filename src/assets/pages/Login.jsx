@@ -1,3 +1,4 @@
+// src/assets/pages/Login.jsx
 import React, { useState } from 'react';
 import { useUser } from '../context/UserContext';
 import { Navigate } from 'react-router-dom';
@@ -5,25 +6,11 @@ import { Navigate } from 'react-router-dom';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const { token, login } = useUser();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-       if (!email.includes('@')) {
-      setError('El email debe contener "@"');
-      return;
-    }
-
-    
-    if (password.length < 8) {
-      setError('La contraseña debe tener al menos 8 caracteres');
-      return;
-    }
-
-    // Aquí se puede añadir lógica de validación adicional
-    login(); // Simula el inicio de sesión
+    login(email, password); // Usamos el método de login
   };
 
   if (token) return <Navigate to="/" />;
@@ -50,7 +37,6 @@ const Login = () => {
             required
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
         <button type="submit">Login</button>
       </form>
     </div>

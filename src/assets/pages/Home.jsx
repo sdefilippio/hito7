@@ -1,44 +1,27 @@
-// Home.jsx
+// src/assets/pages/Home.jsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import { useCart } from '../context/CartContext'; 
-import '/src/index.css';
+import CardPizza from '../components/CardPizza';  // Asegúrate de la ruta correcta
+import '/src/index.css'; // Importamos el CSS correspondiente
 
 const Home = () => {
-  const [pizzas] = useState([
-    { id: 'p001', name: 'Margarita', imgSrc: '../imgs/pizza1.jpg', description: 'Salsa de tomate, queso mozzarella y albahaca.', price: 10.00 },
-    { id: 'p002', name: 'Pepperoni', imgSrc: '../imgs/pizza2.jpg', description: 'Salsa de tomate, queso mozzarella y pepperoni.', price: 12.00 },
-    { id: 'p003', name: 'Cuatro Quesos', imgSrc: '../imgs/pizza3.jpg', description: 'Mezcla de cuatro quesos: mozzarella, cheddar, parmesano y gorgonzola.', price: 15.00 },
-    { id: 'p004', name: 'Hawaiana', imgSrc: '../imgs/pizza4.jpg', description: 'Salsa de tomate, queso mozzarella, jamón y piña.', price: 13.00 },
-    { id: 'p005', name: 'Vegetariana', imgSrc: '../imgs/pizza5.jpg', description: 'Salsa de tomate, queso mozzarella, pimientos, cebollas, champiñones y aceitunas.', price: 14.00 },
-    { id: 'p006', name: 'Barbacoa', imgSrc: '../imgs/pizza6.jpg', description: 'Salsa barbacoa, queso mozzarella, carne de res y cebollas rojas.', price: 16.00 },
+ 
+  const [pizzas, setPizzas] = useState([
+    { id: 'p001', name: 'Margarita', imgSrc: '/assets/imgs/pizza1.jpg', description: 'Clásica pizza Margarita con tomate y albahaca.', price: 8.99 },
+    { id: 'p002', name: 'Pepperoni', imgSrc: '/assets/imgs/pizza2.jpg', description: 'Pizza con pepperoni fresco y crujiente.', price: 10.99 },
+    { id: 'p003', name: 'Cuatro Quesos', imgSrc: '/assets/imgs/pizza3.jpg', description: 'Pizza con mezcla de cuatro quesos.', price: 12.99 },
+    { id: 'p004', name: 'Hawaiana', imgSrc: '/assets/imgs/pizza4.jpg', description: 'Pizza con piña y jamón.', price: 9.99 },
+    { id: 'p005', name: 'Vegetariana', imgSrc: '/assets/imgs/pizza5.jpg', description: 'Pizza con verduras frescas de temporada.', price: 8.99 },
+    { id: 'p006', name: 'Barbacoa', imgSrc: '/assets/imgs/pizza6.jpg', description: 'Pizza con salsa barbacoa y carne.', price: 11.99 },
   ]);
 
-  const { addToCart } = useCart(); 
-  const navigate = useNavigate(); 
-
-  const handleAddToCart = (pizza) => {
-    addToCart(pizza);
-    navigate('/cart'); // Redirige al carrito
-  };
-
   return (
-    <div className="card-container">
-      {pizzas.map(pizza => (
-        <div key={pizza.id} className="card-pizza">
-          <img src={pizza.imgSrc} alt={pizza.name} />
-          <div className="pizza-info">
-            <h3>{pizza.name}</h3>
-            <p>{pizza.description}</p>
-            <button
-              className="button-buy"
-              onClick={() => handleAddToCart(pizza)}
-            >
-              Comprar
-            </button>
-          </div>
-        </div>
-      ))}
+    <div>
+      <h1>Bienvenidos a Pizzería Mamma Mía</h1>
+      <div className="card-container">
+        {pizzas.map((pizza) => (
+          <CardPizza key={pizza.id} pizza={pizza} />
+        ))}
+      </div>
     </div>
   );
 };

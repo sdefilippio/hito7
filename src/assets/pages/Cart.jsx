@@ -1,11 +1,31 @@
-// Cart.jsx
+// src/assets/pages/Cart.jsx
 import React from 'react';
-import { useCart } from '../context/CartContext'; // Ajusta la ruta si es necesario
-import { useUser } from '../context/UserContext'; // Ajusta la ruta si es necesario
+import { useCart } from '../context/CartContext'; 
+import { useUser } from '../context/UserContext'; 
 
-const Cart = () => {
-  const { cart, totalPrice, removeFromCart } = useCart(); // Accedemos al contexto del carrito
-  const { token } = useUser(); // Accedemos al contexto del usuario
+function Cart() {
+  const { cart, totalPrice, removeFromCart } = useCart();
+  const { token } = useUser();
+
+  const handlePurchase = async () => {
+    try {
+      const response = await fetch('/api/checkouts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ cart }),
+      });
+
+      if (!response.ok) throw new Error('Purchase failed');
+
+      const result = await response.json();
+      alert('Compra realizada con éxito!');  // Mensaje de éxito
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <div className="cart-container">
@@ -23,11 +43,13 @@ const Cart = () => {
             ))}
           </ul>
           <h2>Total: ${totalPrice.toFixed(2)}</h2>
-          <button disabled={!token} className="pay-button">Pagar</button>
+          <button disabled={!token} onClick={handlePurchase} className="button-buy">
+            Pagar
+          </button>
         </>
       )}
     </div>
   );
-};
+}
 
 export default Cart;

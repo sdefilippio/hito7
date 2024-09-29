@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 function Pizza() {
-  const { id } = useParams();  // Obtiene el ID de la URL
+  const { id } = useParams(); 
   const [pizza, setPizza] = useState(null);
 
-  // Simulación de petición a la API
+ 
   useEffect(() => {
     const fetchPizza = async () => {
       try {
-        // Aquí simulamos la petición a un endpoint local o API
+        
         const response = await fetch(`/api/pizzas/${id}`);
         const data = await response.json();
         setPizza(data);
@@ -22,8 +22,7 @@ function Pizza() {
   }, [id]);
 
   if (!pizza) {
-    return <p>Cargando pizza...</p>;  // Mostrar un mensaje mientras se carga la pizza
-  }
+    return <p>Cargando pizza...</p>; 
 
   return (
     <div>

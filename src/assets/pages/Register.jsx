@@ -1,3 +1,4 @@
+// src/assets/pages/Register.jsx
 import React, { useState } from 'react';
 import { useUser } from '../context/UserContext';
 import { Navigate } from 'react-router-dom';
@@ -5,28 +6,11 @@ import { Navigate } from 'react-router-dom';
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const { token } = useUser();
+  const { token, register } = useUser();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!email.includes('@')) {
-      setError('El email debe contener "@"');
-      return;
-    }
-
-    
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasLowerCase = /[a-z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-
-    if (!hasUpperCase || !hasLowerCase || !hasNumber) {
-      setError('La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número');
-      return;
-    }
-
-
+    register(email, password); // Usamos el método de registro
   };
 
   if (token) return <Navigate to="/" />;
@@ -53,7 +37,6 @@ const Register = () => {
             required
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
         <button type="submit">Register</button>
       </form>
     </div>

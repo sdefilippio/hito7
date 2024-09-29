@@ -1,42 +1,28 @@
-// Navbar.jsx
+// src/assets/components/Navbar.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 
-const Navbar = () => {
-  const { token, logout } = useUser();
+function Navbar() {
+  const { token, logout } = useUser();  // Accede al token y al método logout desde el UserContext
 
   return (
     <nav className="navbar">
-      <ul className="navbar-menu">
-        <li>
-          <Link className="nav-link" to="/">Home</Link>
-        </li>
-        <li>
-          <Link className="nav-link" to="/cart">Cart</Link>
-        </li>
-        {token ? (
-          <>
-            <li>
-              <Link className="nav-link" to="/profile">Profile</Link>
-            </li>
-            <li>
-              <button className="nav-link" onClick={logout}>Logout</button>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <Link className="nav-link" to="/login">Login</Link>
-            </li>
-            <li>
-              <Link className="nav-link" to="/register">Register</Link>
-            </li>
-          </>
-        )}
-      </ul>
+      <Link to="/">Home</Link>
+      {token ? (
+        <>
+          <Link to="/profile">Profile</Link>
+          <button onClick={logout}>Logout</button>  {/* Botón de cerrar sesión */}
+        </>
+      ) : (
+        <>
+          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
+        </>
+      )}
+      <Link to="/cart">Cart</Link>
     </nav>
   );
-};
+}
 
 export default Navbar;
